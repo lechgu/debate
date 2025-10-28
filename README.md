@@ -6,7 +6,35 @@ A Python application where three LLMs (running in Docker via llama.cpp) debate a
 
 ## Setup
 
-### 1. Start the LLM Containers
+### 1. Download the Models
+
+Create a directory for the models and download the required GGUF files:
+
+```bash
+mkdir -p ~/models/llama
+cd ~/models/llama
+```
+
+Download the following models from Hugging Face:
+
+**Alice - Google Gemma 3 12B:**
+```bash
+wget https://huggingface.co/lmstudio-community/gemma-3-12b-it-GGUF/resolve/main/google_gemma-3-12b-it-Q8_0.gguf
+```
+
+**Bob - GPT-OSS 20B:**
+```bash
+wget https://huggingface.co/mradermacher/GPT-OSS-20B-GGUF/resolve/main/GPT-OSS-20B.Q8_0.gguf -O gpt-oss-20b-Q8_0.gguf
+```
+
+**Charlie - Qwen3 14B:**
+```bash
+wget https://huggingface.co/mradermacher/Qwen3-14B-UD-GGUF/resolve/main/Qwen3-14B-UD.Q6_K_XL.gguf -O Qwen3-14B-UD-Q6_K_XL.gguf
+```
+
+> **Note**: These are large files (10-20GB each). Make sure you have sufficient disk space and a stable internet connection.
+
+### 2. Start the LLM Containers
 
 ```bash
 docker-compose up -d
@@ -17,7 +45,15 @@ This starts three LLM servers:
 - **Bob** (port 9092): GPT-OSS 20B
 - **Charlie** (port 9093): Qwen3 14B
 
-### 2. Install Python Dependencies
+### 3. Create and Activate Python Virtual Environment
+
+```bash
+python -m venv .venv
+source .venv/bin/activate  # On Linux/macOS
+# .venv\Scripts\activate   # On Windows
+```
+
+### 4. Install Python Dependencies
 
 ```bash
 pip install -r requirements.txt
